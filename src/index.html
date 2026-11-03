@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DLSS Unlocked Manager</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script type="module" src="/main.js" defer></script>
+  </head>
+
+  <body>
+    <div class="app-shell">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-text">
+            <span class="brand-title">DLSS Unlocked</span>
+            <span class="brand-sub">Manager</span>
+          </div>
+        </div>
+
+        <nav class="nav-list">
+          <button class="nav-item active" data-tab="games">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="2" y="6" width="20" height="12" rx="3" />
+              <path d="M6 12h4M8 10v4M15 11h.01M18 13h.01" stroke-linecap="round" />
+            </svg>
+            <span>Games Library</span>
+            <span class="nav-badge" id="nav-games-count">0</span>
+          </button>
+
+          <button class="nav-item" data-tab="ini">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6" stroke-linecap="round" />
+            </svg>
+            <span>INI Tuning</span>
+          </button>
+
+          <button class="nav-item" data-tab="packages">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+              <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+              <line x1="12" y1="22.08" x2="12" y2="12" />
+            </svg>
+            <span>Packages</span>
+            <span class="nav-badge" id="nav-pkg-count">0</span>
+          </button>
+
+          <button class="nav-item" data-tab="guide">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="12" cy="12" r="10" />
+              <path d="M12 16v-4M12 8h.01" stroke-linecap="round" />
+            </svg>
+            <span>Guide &amp; System</span>
+          </button>
+        </nav>
+
+        <div class="sidebar-footer">
+          <div class="gpu-card" id="gpu-card">
+            <div class="gpu-card-header">
+              <span class="gpu-chip-label">Graphics</span>
+              <span class="gpu-preset-pill" id="gpu-preset-badge">Detecting...</span>
+            </div>
+            <div class="gpu-name" id="gpu-name">Scanning adapters...</div>
+            <div class="gpu-meta" id="gpu-meta">Please wait</div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="main-area">
+        <!-- Global Activity Bar -->
+        <div class="activity-bar hidden" id="activity-bar">
+          <div class="activity-info">
+            <span class="spinner"></span>
+            <span id="activity-text">Working...</span>
+          </div>
+          <div class="activity-progress-wrap">
+            <div class="activity-progress-fill" id="activity-progress" style="width: 0%"></div>
+          </div>
+        </div>
+
+        <!-- TAB 1: GAMES LIBRARY -->
+        <section class="tab-view active" id="tab-games">
+          <header class="view-header">
+            <div>
+              <h1>Games Library</h1>
+              <p class="view-subtitle">Auto-detected from Steam, Epic Games, GOG &amp; custom folders</p>
+            </div>
+            <div class="header-actions">
+              <button class="btn btn-secondary" id="btn-add-game" title="Add a game directory manually">
+                <span>Add Game Folder</span>
+              </button>
+              <button class="btn btn-primary" id="btn-scan-games">
+                <span>Rescan Library</span>
+              </button>
+            </div>
+          </header>
+
+          <div class="toolbar">
+            <div class="search-box">
+              <input type="text" id="game-search" placeholder="Search games by title, store, or folder..." />
+            </div>
+
+            <div class="filter-pills" id="game-filters">
+              <button class="pill active" data-filter="all">All</button>
+              <button class="pill" data-filter="dlss">DLSS Ready</button>
+              <button class="pill" data-filter="installed">Installed</button>
+              <button class="pill" data-filter="steam">Steam</button>
+              <button class="pill" data-filter="epic">Epic</button>
+              <button class="pill" data-filter="gog">GOG</button>
+              <button class="pill" data-filter="custom">Custom</button>
+            </div>
+          </div>
+
+          <div class="library-split">
+            <div class="games-grid-wrap">
+              <div class="games-grid" id="games-grid"></div>
+            </div>
+
+            <!-- Inspector Drawer -->
+            <aside class="game-inspector" id="game-inspector">
+              <div class="inspector-empty" id="inspector-empty">
+                <h3>Select a Game</h3>
+                <p>Choose any game from your library or add a custom game folder to install, upgrade, or configure DLSS Unlocked.</p>
+              </div>
+              <div class="inspector-content hidden" id="inspector-content"></div>
+            </aside>
+          </div>
+        </section>
+
+        <!-- TAB 2: OPTISCALER INI TUNING -->
+        <section class="tab-view" id="tab-ini">
+          <header class="view-header">
+            <div>
+              <h1>OptiScaler.ini Tuning</h1>
+              <p class="view-subtitle">Configure Multi-Frame Generation (MFG), Upscalers, DLSS-NR &amp; Overlay per game</p>
+            </div>
+            <div class="header-actions">
+              <select id="ini-game-select" class="select-input"></select>
+              <button class="btn btn-secondary" id="btn-ini-browse" title="Open OptiScaler.ini from any folder">
+                Browse Folder...
+              </button>
+              <button class="btn btn-secondary" id="btn-ini-restore" title="Restore .ini.gui-bak backup">
+                Restore Backup
+              </button>
+              <button class="btn btn-primary" id="btn-ini-save">
+                Save Changes
+              </button>
+            </div>
+          </header>
+
+          <div class="ini-subbar">
+            <div class="ini-mode-tabs">
+              <button class="pill active" data-ini-mode="quick">Quick MFG &amp; Upscaler Studio</button>
+              <button class="pill" data-ini-mode="sections">All INI Sections</button>
+              <button class="pill" data-ini-mode="raw">Raw Text Editor</button>
+            </div>
+            <div class="ini-search-wrap" id="ini-search-wrap">
+              <input type="text" id="ini-search" placeholder="Filter INI keys or descriptions..." />
+            </div>
+          </div>
+
+          <div class="ini-body" id="ini-body"></div>
+        </section>
+
+        <!-- TAB 3: PACKAGES & RELEASES -->
+        <section class="tab-view" id="tab-packages">
+          <header class="view-header">
+            <div>
+              <h1>DLSS Unlocked Packages</h1>
+              <p class="view-subtitle">Download standalone archives from GitHub (<code>ShyVortex/dlss-unlocked</code>) or import a local <code>.zip</code></p>
+            </div>
+            <div class="header-actions">
+              <button class="btn btn-secondary" id="btn-import-zip">
+                <span>Import .zip File</span>
+              </button>
+              <button class="btn btn-secondary" id="btn-import-folder">
+                <span>Import Extracted Folder</span>
+              </button>
+              <button class="btn btn-secondary" id="btn-open-pkg-dir">
+                <span>Open Cache Dir</span>
+              </button>
+              <button class="btn btn-primary" id="btn-refresh-releases">
+                <span>Check GitHub Releases</span>
+              </button>
+            </div>
+          </header>
+
+          <div class="packages-list" id="packages-list"></div>
+        </section>
+
+        <!-- TAB 4: GUIDE & SYSTEM -->
+        <section class="tab-view" id="tab-guide">
+          <header class="view-header">
+            <div>
+              <h1>System &amp; Quick Reference</h1>
+              <p class="view-subtitle">Hardware compatibility, proxy DLL selection, and Proton launch options</p>
+            </div>
+            <div class="header-actions">
+              <button class="btn btn-secondary" id="btn-unhide-games">Restore Hidden Games</button>
+              <button class="btn btn-secondary" id="btn-open-data-dir">Open App Data Folder</button>
+            </div>
+          </header>
+
+          <div class="guide-grid" id="guide-grid"></div>
+        </section>
+      </main>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toast-container"></div>
+  </body>
+</html>
