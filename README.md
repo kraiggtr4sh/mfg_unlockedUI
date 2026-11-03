@@ -1,6 +1,15 @@
-﻿# DLSS Unlocked Manager
+# DLSS Unlocked Manager
 
-Desktop GUI manager (Tauri v2 + Rust) for **[DLSS Unlocked (`ShyVortex/dlss-unlocked`)](https://github.com/ShyVortex/dlss-unlocked)** â€” providing one-click deployment, upgrades, safe backup/restore, and `OptiScaler.ini` tuning for **Multi-Frame Generation (MFG 2X/3X/4X)**, **DLSS-G**, **XeFG**, and **DLSS-NR (Pre-SR Multipass)**.
+Desktop GUI manager (Tauri v2 + Rust) for **[DLSS Unlocked (`ShyVortex/dlss-unlocked`)](https://github.com/ShyVortex/dlss-unlocked)** - providing one-click deployment, upgrades, safe backup/restore, and `OptiScaler.ini` tuning for **Multi-Frame Generation (MFG 2X/3X/4X)**, **DLSS-G**, **XeFG**, and **DLSS-NR (Pre-SR Multipass)**.
+
+## Download
+
+| File | Description |
+|---|---|
+| [`release/DLSS-Unlocked-Manager_0.1.0_x64-setup.exe`](release/DLSS-Unlocked-Manager_0.1.0_x64-setup.exe) | Windows installer (recommended) |
+| [`release/DLSS-Unlocked-Manager_0.1.0_x64-portable.exe`](release/DLSS-Unlocked-Manager_0.1.0_x64-portable.exe) | Portable executable, no installation required |
+
+Requires Windows 10/11 x64 with Microsoft Edge WebView2 Runtime (preinstalled on Windows 11).
 
 ## Features
 
@@ -10,13 +19,6 @@ Desktop GUI manager (Tauri v2 + Rust) for **[DLSS Unlocked (`ShyVortex/dlss-unlo
 - **Safe Manifest & Backup Engine**: 100% compatible with upstream `install.sh` (`.dlss-unlocked.manifest` and `*.dlss-unlocked.bak`), preserving existing mods like ReShade and restoring them cleanly on uninstall.
 - **OptiScaler.ini Studio & Editor**: Visual toggles for MFG unlockers, frame generation backend, upscalers, overlay menu, searchable full section editor, and raw `.ini` editor with one-click backup restore.
 - **Package Manager**: Download standalone `.zip` releases directly from `ShyVortex/dlss-unlocked` on GitHub or import local `.zip` archives / extracted folders.
-
-## Developers
-
-| Role | Name |
-|---|---|
-| Lead Developer | [Kraigg](https://github.com/kraiggtr4sh) |
-| Co-Developer | [Claude](https://www.anthropic.com/claude) (Anthropic) |
 
 ## Development & Build
 
