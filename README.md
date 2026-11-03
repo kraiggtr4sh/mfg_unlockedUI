@@ -2,15 +2,6 @@
 
 Desktop GUI manager (Tauri v2 + Rust) for **[DLSS Unlocked (`ShyVortex/dlss-unlocked`)](https://github.com/ShyVortex/dlss-unlocked)** - providing one-click deployment, upgrades, safe backup/restore, and `OptiScaler.ini` tuning for **Multi-Frame Generation (MFG 2X/3X/4X)**, **DLSS-G**, **XeFG**, and **DLSS-NR (Pre-SR Multipass)**.
 
-## Download
-
-| File | Description |
-|---|---|
-| [`release/DLSS-Unlocked-Manager_0.1.0_x64-setup.exe`](release/DLSS-Unlocked-Manager_0.1.0_x64-setup.exe) | Windows installer (recommended) |
-| [`release/DLSS-Unlocked-Manager_0.1.0_x64-portable.exe`](release/DLSS-Unlocked-Manager_0.1.0_x64-portable.exe) | Portable executable, no installation required |
-
-Requires Windows 10/11 x64 with Microsoft Edge WebView2 Runtime (preinstalled on Windows 11).
-
 ## Features
 
 - **Automatic Library Discovery**: Scans **Steam** (`libraryfolders.vdf` + `appmanifest_*.acf`), **Epic Games Launcher**, **GOG**, and custom game folders.
